@@ -1,28 +1,45 @@
 # Cryptographic/Compression Algorithms
 
+## Cryptographic/Compression Algorithms
+
+{% hint style="success" %}
+Learn & practice AWS Hacking:<img src="/.gitbook/assets/arte.png" alt="" data-size="line">[**HackTricks Training AWS Red Team Expert (ARTE)**](https://training.hacktricks.xyz/courses/arte)<img src="/.gitbook/assets/arte.png" alt="" data-size="line">\
+Learn & practice GCP Hacking: <img src="/.gitbook/assets/grte.png" alt="" data-size="line">[**HackTricks Training GCP Red Team Expert (GRTE)**<img src="/.gitbook/assets/grte.png" alt="" data-size="line">](https://training.hacktricks.xyz/courses/grte)
+
+<details>
+
+<summary>Support HackTricks</summary>
+
+* Check the [**subscription plans**](https://github.com/sponsors/carlospolop)!
+* **Join the** 💬 [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** us on **Twitter** 🐦 [**@hacktricks\_live**](https://twitter.com/hacktricks\_live)**.**
+* **Share hacking tricks by submitting PRs to the** [**HackTricks**](https://github.com/carlospolop/hacktricks) and [**HackTricks Cloud**](https://github.com/carlospolop/hacktricks-cloud) github repos.
+
+</details>
+{% endhint %}
+
 ## Identifying Algorithms
 
 If you ends in a code **using shift rights and lefts, xors and several arithmetic operations** it's highly possible that it's the implementation of a **cryptographic algorithm**. Here it's going to be showed some ways to **identify the algorithm that it's used without needing to reverse each step**.
 
 ### API functions
 
-#### CryptDeriveKey
+**CryptDeriveKey**
 
 If this function is used, you can find which **algorithm is being used** checking the value of the second parameter:
 
-![](<../../.gitbook/assets/image (254) (1).png>)
+![](<../../.gitbook/assets/image (375) (1) (1) (1) (1).png>)
 
 Check here the table of possible algorithms and their assigned values: [https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id](https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id)
 
-#### RtlCompressBuffer/RtlDecompressBuffer
+**RtlCompressBuffer/RtlDecompressBuffer**
 
 Compresses and decompresses a given buffer of data.
 
-#### CryptAcquireContext
+**CryptAcquireContext**
 
-The **CryptAcquireContext** function is used to acquire a handle to a particular key container within a particular cryptographic service provider (CSP). **This returned handle is used in calls to CryptoAPI** functions that use the selected CSP.
+From [the docs](https://learn.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptacquirecontexta): The **CryptAcquireContext** function is used to acquire a handle to a particular key container within a particular cryptographic service provider (CSP). **This returned handle is used in calls to CryptoAPI** functions that use the selected CSP.
 
-#### CryptCreateHash
+**CryptCreateHash**
 
 Initiates the hashing of a stream of data. If this function is used, you can find which **algorithm is being used** checking the value of the second parameter:
 
@@ -84,7 +101,7 @@ It's composed of 3 main parts:
 ### **Characteristics**
 
 * Use of **substitution boxes and lookup tables**
-  * It's possible to **distinguish AES thanks to the use of specific lookup table values** (constants). _Note that the **constant** can be **stored** in the binary **or created**  **dynamically**._
+  * It's possible to **distinguish AES thanks to the use of specific lookup table values** (constants). _Note that the **constant** can be **stored** in the binary **or created**_ _**dynamically**._
 * The **encryption key** must be **divisible** by **16** (usually 32B) and usually an **IV** of 16B is used.
 
 ### SBox constants
@@ -135,17 +152,17 @@ Therefore, it's possible to identify this algorithm checking the **magic number*
 
 ### Identify
 
-#### Init
+**Init**
 
 You can identify both of them checking the constants. Note that the sha\_init has 1 constant that MD5 doesn't have:
 
 ![](<../../.gitbook/assets/image (385).png>)
 
-#### MD5 Transform
+**MD5 Transform**
 
 Note the use of more constants
 
-![](<../../.gitbook/assets/image (253) (1) (1).png>)
+![](<../../.gitbook/assets/image (253) (1) (1) (1).png>)
 
 ## CRC (hash)
 
@@ -173,8 +190,23 @@ A CRC hash algorithm looks like:
 
 The graph is quiet large:
 
-![](<../../.gitbook/assets/image (207) (2).png>)
+![](<../../.gitbook/assets/image (207) (2) (1).png>)
 
 Check **3 comparisons to recognise it**:
 
 ![](<../../.gitbook/assets/image (384).png>)
+
+{% hint style="success" %}
+Learn & practice AWS Hacking:<img src="/.gitbook/assets/arte.png" alt="" data-size="line">[**HackTricks Training AWS Red Team Expert (ARTE)**](https://training.hacktricks.xyz/courses/arte)<img src="/.gitbook/assets/arte.png" alt="" data-size="line">\
+Learn & practice GCP Hacking: <img src="/.gitbook/assets/grte.png" alt="" data-size="line">[**HackTricks Training GCP Red Team Expert (GRTE)**<img src="/.gitbook/assets/grte.png" alt="" data-size="line">](https://training.hacktricks.xyz/courses/grte)
+
+<details>
+
+<summary>Support HackTricks</summary>
+
+* Check the [**subscription plans**](https://github.com/sponsors/carlospolop)!
+* **Join the** 💬 [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** us on **Twitter** 🐦 [**@hacktricks\_live**](https://twitter.com/hacktricks\_live)**.**
+* **Share hacking tricks by submitting PRs to the** [**HackTricks**](https://github.com/carlospolop/hacktricks) and [**HackTricks Cloud**](https://github.com/carlospolop/hacktricks-cloud) github repos.
+
+</details>
+{% endhint %}

@@ -1,25 +1,40 @@
 # Partitions/File Systems/Carving
 
+{% hint style="success" %}
+Learn & practice AWS Hacking:<img src="/.gitbook/assets/arte.png" alt="" data-size="line">[**HackTricks Training AWS Red Team Expert (ARTE)**](https://training.hacktricks.xyz/courses/arte)<img src="/.gitbook/assets/arte.png" alt="" data-size="line">\
+Learn & practice GCP Hacking: <img src="/.gitbook/assets/grte.png" alt="" data-size="line">[**HackTricks Training GCP Red Team Expert (GRTE)**<img src="/.gitbook/assets/grte.png" alt="" data-size="line">](https://training.hacktricks.xyz/courses/grte)
+
+<details>
+
+<summary>Support HackTricks</summary>
+
+* Check the [**subscription plans**](https://github.com/sponsors/carlospolop)!
+* **Join the** 💬 [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** us on **Twitter** 🐦 [**@hacktricks\_live**](https://twitter.com/hacktricks\_live)**.**
+* **Share hacking tricks by submitting PRs to the** [**HackTricks**](https://github.com/carlospolop/hacktricks) and [**HackTricks Cloud**](https://github.com/carlospolop/hacktricks-cloud) github repos.
+
+</details>
+{% endhint %}
+
 ## Partitions
 
-A hard drive or a **SSD disk can contain different partitions** with the goal of separating data physically.\
-The **minimum** unit of a disk is the **sector** (normally composed by 512B). So, each partition size needs to be multiple of that size.
+A hard drive or an **SSD disk can contain different partitions** with the goal of separating data physically.\
+The **minimum** unit of a disk is the **sector** (normally composed of 512B). So, each partition size needs to be multiple of that size.
 
 ### MBR (master Boot Record)
 
-It's allocated in the **first sector of the disk after the 446B of the boot code**. This sector is essential to indicate the PC what and from where a partition should be mounted.\
-It allows up to **4 partitions** (at most **just 1** can be active/**bootable**). However, if you need more partitions you can use **extended partitions**.. The **final byte** of this first sector is the boot record signature **0x55AA**. Only one partition can be marked as active.\
+It's allocated in the **first sector of the disk after the 446B of the boot code**. This sector is essential to indicate to the PC what and from where a partition should be mounted.\
+It allows up to **4 partitions** (at most **just 1** can be active/**bootable**). However, if you need more partitions you can use **extended partitions**. The **final byte** of this first sector is the boot record signature **0x55AA**. Only one partition can be marked as active.\
 MBR allows **max 2.2TB**.
 
 ![](<../../../.gitbook/assets/image (489).png>)
 
 ![](<../../../.gitbook/assets/image (490).png>)
 
-From the **bytes 440 to the 443** of the MBR you can find the **Windows Disk Signature** (if Windows is used). The logical drive letters of the hard disk depend on the Windows Disk Signature. Changing this signature could prevent Windows from booting (tool: [**Active Disk Editor**](https://www.disk-editor.org/index.html)**)**.
+From the **bytes 440 to the 443** of the MBR you can find the **Windows Disk Signature** (if Windows is used). The logical drive letter of the hard disk depends on the Windows Disk Signature. Changing this signature could prevent Windows from booting (tool: [**Active Disk Editor**](https://www.disk-editor.org/index.html)**)**.
 
 ![](<../../../.gitbook/assets/image (493).png>)
 
-#### Format
+**Format**
 
 | Offset      | Length     | Item                |
 | ----------- | ---------- | ------------------- |
@@ -30,7 +45,7 @@ From the **bytes 440 to the 443** of the MBR you can find the **Windows Disk Sig
 | 494 (0x1EE) | 16 (0x10)  | Fourth Partition    |
 | 510 (0x1FE) | 2 (0x2)    | Signature 0x55 0xAA |
 
-#### Partition Record Format
+**Partition Record Format**
 
 | Offset    | Length   | Item                                                   |
 | --------- | -------- | ------------------------------------------------------ |
@@ -45,11 +60,11 @@ From the **bytes 440 to the 443** of the MBR you can find the **Windows Disk Sig
 | 8 (0x08)  | 4 (0x04) | Sectors preceding partition (little endian)            |
 | 12 (0x0C) | 4 (0x04) | Sectors in partition                                   |
 
-In order to mount a MBR in Linux you first need to get the start offset (you can use `fdisk` and the the `p` command)
+In order to mount an MBR in Linux you first need to get the start offset (you can use `fdisk` and the `p` command)
 
-![](<../../../.gitbook/assets/image (413) (3) (3) (3) (2) (1) (1) (2).png>)
+![](<../../../.gitbook/assets/image (413) (3) (3) (3) (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (12).png>)
 
-An then use the following code
+And then use the following code
 
 ```bash
 #Mount MBR in Linux
@@ -58,33 +73,38 @@ mount -o ro,loop,offset=<Bytes>
 mount -o ro,loop,offset=32256,noatime /path/to/image.dd /media/part/
 ```
 
-#### LBA (Logical block addressing)
+**LBA (Logical block addressing)**
 
 **Logical block addressing** (**LBA**) is a common scheme used for **specifying the location of blocks** of data stored on computer storage devices, generally secondary storage systems such as hard disk drives. LBA is a particularly simple linear addressing scheme; **blocks are located by an integer index**, with the first block being LBA 0, the second LBA 1, and so on.
 
 ### GPT (GUID Partition Table)
 
-It’s called GUID Partition Table because every partition on your drive has a **globally unique identifier**.
+The GUID Partition Table, known as GPT, is favored for its enhanced capabilities compared to MBR (Master Boot Record). Distinctive for its **globally unique identifier** for partitions, GPT stands out in several ways:
 
-Just like MBR it starts in the **sector 0**. The MBR occupies 32bits while **GPT** uses **64bits**.\
-GPT **allows up to 128 partitions** in Windows and up to **9.4ZB**.\
-Also, partitions can have a 36 character Unicode name.
+* **Location and Size**: Both GPT and MBR start at **sector 0**. However, GPT operates on **64bits**, contrasting with MBR's 32bits.
+* **Partition Limits**: GPT supports up to **128 partitions** on Windows systems and accommodates up to **9.4ZB** of data.
+* **Partition Names**: Offers the ability to name partitions with up to 36 Unicode characters.
 
-On an MBR disk, the partitioning and boot data is stored in one place. If this data is overwritten or corrupted, you’re in trouble. In contrast, **GPT stores multiple copies of this data across the disk**, so it’s much more robust and can recover if the data is corrupted.
+**Data Resilience and Recovery**:
 
-GPT also stores **cyclic redundancy check (CRC)** values to check that its data is intact. If the data is corrupted, GPT can notice the problem and **attempt to recover the damaged data** from another location on the disk.
+* **Redundancy**: Unlike MBR, GPT doesn't confine partitioning and boot data to a single place. It replicates this data across the disk, enhancing data integrity and resilience.
+* **Cyclic Redundancy Check (CRC)**: GPT employs CRC to ensure data integrity. It actively monitors for data corruption, and when detected, GPT attempts to recover the corrupted data from another disk location.
 
-#### Protective MBR (LBA0)
+**Protective MBR (LBA0)**:
 
-For limited backward compatibility, the space of the legacy MBR is still reserved in the GPT specification, but it is now used in a **way that prevents MBR-based disk utilities from misrecognizing and possibly overwriting GPT disks**. This is referred to as a protective MBR.
+* GPT maintains backward compatibility through a protective MBR. This feature resides in the legacy MBR space but is designed to prevent older MBR-based utilities from mistakenly overwriting GPT disks, hence safeguarding the data integrity on GPT-formatted disks.
 
-![](<../../../.gitbook/assets/image (491).png>)
+![https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/GUID\_Partition\_Table\_Scheme.svg/800px-GUID\_Partition\_Table\_Scheme.svg.png](<../../../.gitbook/assets/image (491).png>)
 
-#### Hybrid MBR (LBA 0 + GPT)
+**Hybrid MBR (LBA 0 + GPT)**
+
+[From Wikipedia](https://en.wikipedia.org/wiki/GUID\_Partition\_Table)
 
 In operating systems that support **GPT-based boot through BIOS** services rather than EFI, the first sector may also still be used to store the first stage of the **bootloader** code, but **modified** to recognize **GPT** **partitions**. The bootloader in the MBR must not assume a sector size of 512 bytes.
 
-#### Partition table header (LBA 1)
+**Partition table header (LBA 1)**
+
+[From Wikipedia](https://en.wikipedia.org/wiki/GUID\_Partition\_Table)
 
 The partition table header defines the usable blocks on the disk. It also defines the number and size of the partition entries that make up the partition table (offsets 80 and 84 in the table).
 
@@ -100,13 +120,13 @@ The partition table header defines the usable blocks on the disk. It also define
 | 40 (0x28) | 8 bytes  | First usable LBA for partitions (primary partition table last LBA + 1)                                                                                                          |
 | 48 (0x30) | 8 bytes  | Last usable LBA (secondary partition table first LBA − 1)                                                                                                                       |
 | 56 (0x38) | 16 bytes | Disk GUID in mixed endian                                                                                                                                                       |
-| 72 (0x48) | 8 bytes  | Starting LBA of array of partition entries (always 2 in primary copy)                                                                                                           |
+| 72 (0x48) | 8 bytes  | Starting LBA of an array of partition entries (always 2 in primary copy)                                                                                                        |
 | 80 (0x50) | 4 bytes  | Number of partition entries in array                                                                                                                                            |
 | 84 (0x54) | 4 bytes  | Size of a single partition entry (usually 80h or 128)                                                                                                                           |
 | 88 (0x58) | 4 bytes  | CRC32 of partition entries array in little endian                                                                                                                               |
 | 92 (0x5C) | \*       | Reserved; must be zeroes for the rest of the block (420 bytes for a sector size of 512 bytes; but can be more with larger sector sizes)                                         |
 
-#### Partition entries (LBA 2–33)
+**Partition entries (LBA 2–33)**
 
 | GUID partition entry format |          |                                                                                                                   |
 | --------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------- |
@@ -118,7 +138,7 @@ The partition table header defines the usable blocks on the disk. It also define
 | 48 (0x30)                   | 8 bytes  | Attribute flags (e.g. bit 60 denotes read-only)                                                                   |
 | 56 (0x38)                   | 72 bytes | Partition name (36 [UTF-16](https://en.wikipedia.org/wiki/UTF-16)LE code units)                                   |
 
-#### Partitions Types
+**Partitions Types**
 
 ![](<../../../.gitbook/assets/image (492).png>)
 
@@ -126,11 +146,11 @@ More partition types in [https://en.wikipedia.org/wiki/GUID\_Partition\_Table](h
 
 ### Inspecting
 
-After mounting the forensics image with [**ArsenalImageMounter**](https://arsenalrecon.com/downloads/), you can inspect the first sector using the Windows tool [**Active Disk Editor**](https://www.disk-editor.org/index.html)**.** In the following image a **MBR** was detected on the **sector 0** and interpreted:
+After mounting the forensics image with [**ArsenalImageMounter**](https://arsenalrecon.com/downloads/), you can inspect the first sector using the Windows tool [**Active Disk Editor**](https://www.disk-editor.org/index.html)**.** In the following image an **MBR** was detected on the **sector 0** and interpreted:
 
 ![](<../../../.gitbook/assets/image (494).png>)
 
-If it was a **GPT table instead of a MBR** it should appear the signature _EFI PART_ in the **sector 1** (which in the previous image is empty).
+If it was a **GPT table instead of an MBR** it should appear the signature _EFI PART_ in the **sector 1** (which in the previous image is empty).
 
 ## File-Systems
 
@@ -144,45 +164,31 @@ If it was a **GPT table instead of a MBR** it should appear the signature _EFI P
 
 ### FAT
 
-The **FAT (File Allocation Table)** file system is named for its method of organization, the file allocation table, which resides at the beginning of the volume. To protect the volume, **two copies** of the table are kept, in case one becomes damaged. In addition, the file allocation tables and the root folder must be stored in a **fixed location** so that the files needed to start the system can be correctly located.
+The **FAT (File Allocation Table)** file system is designed around its core component, the file allocation table, positioned at the volume's start. This system safeguards data by maintaining **two copies** of the table, ensuring data integrity even if one is corrupted. The table, along with the root folder, must be in a **fixed location**, crucial for the system's startup process.
 
-![](<../../../.gitbook/assets/image (495).png>)
+The file system's basic unit of storage is a **cluster, usually 512B**, comprising multiple sectors. FAT has evolved through versions:
 
-The minimum space unit used by this file-system is a **cluster, typically 512B** (which is composed by a number of sectors).
+* **FAT12**, supporting 12-bit cluster addresses and handling up to 4078 clusters (4084 with UNIX).
+* **FAT16**, enhancing to 16-bit addresses, thereby accommodating up to 65,517 clusters.
+* **FAT32**, further advancing with 32-bit addresses, allowing an impressive 268,435,456 clusters per volume.
 
-The earlier **FAT12** had a **cluster addresses to 12-bit** values with up to **4078** **clusters**; it allowed up to 4084 clusters with UNIX. The more efficient **FAT16** increased to **16-bit** cluster address allowing up to **65,517 clusters** per volume. FAT32 uses 32-bit cluster address allowing up to **268,435,456 clusters** per volume
+A significant limitation across FAT versions is the **4GB maximum file size**, imposed by the 32-bit field used for file size storage.
 
-The **maximum file-size allowed by FAT is 4GB** (minus one byte) because the file system uses a 32-bit field to store the file size in bytes, and 2^32 bytes = 4 GiB. This happens for FAT12, FAT16 and FAT32.
+Key components of the root directory, particularly for FAT12 and FAT16, include:
 
-The **root directory** occupies a **specific position** for both FAT12 and FAT16 (in FAT32 it occupies a position like any other folder). Each file/folder entry contains this information:
-
-* Name of the file/folder (8 chars max)
-* Attributes
-* Date of creation
-* Date of modification
-* Date of last access
-* Address of the FAT table where the first cluster of the file starts
-* Size
-
-When a file is "deleted" using a FAT file system, the directory entry remains almost **unchanged** except for the **first character of the file name** (modified to 0xE5), preserving most of the "deleted" file's name, along with its time stamp, file length and — most importantly — its physical location on the disk. The list of disk clusters occupied by the file will, however, be erased from the File Allocation Table, marking those sectors available for use by other files created or modified thereafter. In case of FAT32, it is additionally erased field responsible for upper 16 bits of file start cluster value.
-
-### **NTFS**
-
-{% content-ref url="ntfs.md" %}
-[ntfs.md](ntfs.md)
-{% endcontent-ref %}
+* **File/Folder Name** (up to 8 characters)
+* **Attributes**
+* **Creation, Modification, and Last Access Dates**
+* **FAT Table Address** (indicating the start cluster of the file)
+* **File Size**
 
 ### EXT
 
-**Ext2** is the most common file-system for **not journaling** partitions (**partitions that don't change much**) like the boot partition. **Ext3/4** are **journaling** and are used usually for the **rest partitions**.
-
-{% content-ref url="ext.md" %}
-[ext.md](ext.md)
-{% endcontent-ref %}
+**Ext2** is the most common file system for **not journaling** partitions (**partitions that don't change much**) like the boot partition. **Ext3/4** are **journaling** and are used usually for the **rest partitions**.
 
 ## **Metadata**
 
-Some files contains metadata. This is information about the content of the file which sometimes might be interesting for the analyst as depending on the file-type it might have information like:
+Some files contain metadata. This information is about the content of the file which sometimes might be interesting to an analyst as depending on the file type, it might have information like:
 
 * Title
 * MS Office Version used
@@ -198,7 +204,7 @@ You can use tools like [**exiftool**](https://exiftool.org) and [**Metadiver**](
 
 ### Logged Deleted Files
 
-As it was seen before there are several places where the file is still saved after it was "deleted". This is because usually the deletion of a file from a file-system just mark it as deleted but the data isn't touched. Then, it's possible to inspect the registries of the files (like the MFT) and find the deleted files.
+As was seen before there are several places where the file is still saved after it was "deleted". This is because usually the deletion of a file from a file system just marks it as deleted but the data isn't touched. Then, it's possible to inspect the registries of the files (like the MFT) and find the deleted files.
 
 Also, the OS usually saves a lot of information about file system changes and backups, so it's possible to try to use them to recover the file or as much information as possible.
 
@@ -208,11 +214,11 @@ Also, the OS usually saves a lot of information about file system changes and ba
 
 ### **File Carving**
 
-**File carving** is a technique that tries to **find files in a bulk of data**. There are 3 main ways tools like this works: **Based on file types headers and footers**, based on file types **structures** and based on the **content** itself.
+**File carving** is a technique that tries to **find files in the bulk of data**. There are 3 main ways tools like this work: **Based on file types headers and footers**, based on file types **structures** and based on the **content** itself.
 
 Note that this technique **doesn't work to retrieve fragmented files**. If a file **isn't stored in contiguous sectors**, then this technique won't be able to find it or at least part of it.
 
-There are several tools that you can use for file Carving indicating them the file-types you want search for
+There are several tools that you can use for file Carving indicating the file types you want to search for
 
 {% content-ref url="file-data-carving-recovery-tools.md" %}
 [file-data-carving-recovery-tools.md](file-data-carving-recovery-tools.md)
@@ -220,7 +226,7 @@ There are several tools that you can use for file Carving indicating them the fi
 
 ### Data Stream **C**arving
 
-Data Stream Carving is similar to File Carving but i**nstead of looking for complete files, it looks for interesting fragments** of information.\
+Data Stream Carving is similar to File Carving but **instead of looking for complete files, it looks for interesting fragments** of information.\
 For example, instead of looking for a complete file containing logged URLs, this technique will search for URLs.
 
 {% content-ref url="file-data-carving-recovery-tools.md" %}
@@ -239,3 +245,18 @@ You may notice that even performing that action there might be **other parts whe
 * [https://www.osforensics.com/faqs-and-tutorials/how-to-scan-ntfs-i30-entries-deleted-files.html](https://www.osforensics.com/faqs-and-tutorials/how-to-scan-ntfs-i30-entries-deleted-files.html)
 * [https://docs.microsoft.com/en-us/windows-server/storage/file-server/volume-shadow-copy-service](https://docs.microsoft.com/en-us/windows-server/storage/file-server/volume-shadow-copy-service)
 * **iHackLabs Certified Digital Forensics Windows**
+
+{% hint style="success" %}
+Learn & practice AWS Hacking:<img src="/.gitbook/assets/arte.png" alt="" data-size="line">[**HackTricks Training AWS Red Team Expert (ARTE)**](https://training.hacktricks.xyz/courses/arte)<img src="/.gitbook/assets/arte.png" alt="" data-size="line">\
+Learn & practice GCP Hacking: <img src="/.gitbook/assets/grte.png" alt="" data-size="line">[**HackTricks Training GCP Red Team Expert (GRTE)**<img src="/.gitbook/assets/grte.png" alt="" data-size="line">](https://training.hacktricks.xyz/courses/grte)
+
+<details>
+
+<summary>Support HackTricks</summary>
+
+* Check the [**subscription plans**](https://github.com/sponsors/carlospolop)!
+* **Join the** 💬 [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** us on **Twitter** 🐦 [**@hacktricks\_live**](https://twitter.com/hacktricks\_live)**.**
+* **Share hacking tricks by submitting PRs to the** [**HackTricks**](https://github.com/carlospolop/hacktricks) and [**HackTricks Cloud**](https://github.com/carlospolop/hacktricks-cloud) github repos.
+
+</details>
+{% endhint %}

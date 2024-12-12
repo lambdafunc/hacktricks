@@ -1,14 +1,59 @@
-# Video and Audio file analysis
 
-From: [https://trailofbits.github.io/ctf/forensics/](https://trailofbits.github.io/ctf/forensics/)
 
-Like image file formats, audio and video file trickery is a common theme in CTF forensics challenges not because hacking or data hiding ever happens this way in the real world, but just because audio and video is fun. As with image file formats, stegonagraphy might be used to embed a secret message in the content data, and again you should know to check the file metadata areas for clues. Your first step should be to take a look with the [mediainfo](https://mediaarea.net/en/MediaInfo) tool \(or `exiftool`\) and identify the content type and look at its metadata.
+{% hint style="success" %}
+Learn & practice AWS Hacking:<img src="/.gitbook/assets/arte.png" alt="" data-size="line">[**HackTricks Training AWS Red Team Expert (ARTE)**](https://training.hacktricks.xyz/courses/arte)<img src="/.gitbook/assets/arte.png" alt="" data-size="line">\
+Learn & practice GCP Hacking: <img src="/.gitbook/assets/grte.png" alt="" data-size="line">[**HackTricks Training GCP Red Team Expert (GRTE)**<img src="/.gitbook/assets/grte.png" alt="" data-size="line">](https://training.hacktricks.xyz/courses/grte)
 
-[Audacity](http://www.audacityteam.org/) is the premiere open-source audio file and waveform-viewing tool, and CTF challenge authors love to encode text into audio waveforms, which you can see using the spectogram view \(although a specialized tool called [Sonic Visualiser](http://www.sonicvisualiser.org/) is better for this task in particular\). Audacity can also enable you to slow down, reverse, and do other manipulations that might reveal a hidden message if you suspect there is one \(if you can hear garbled audio, interference, or static\). [Sox](http://sox.sourceforge.net/) is another useful command-line tool for converting and manipulating audio files.
+<details>
 
-It's also common to check least-significant-bits \(LSB\) for a secret message. Most audio and video media formats use discrete \(fixed-size\) "chunks" so that they can be streamed; the LSBs of those chunks are a common place to smuggle some data without visibly affecting the file.
+<summary>Support HackTricks</summary>
 
-Other times, a message might be encoded into the audio as [DTMF tones](http://dialabc.com/sound/detect/index.html) or morse code. For these, try working with [multimon-ng](http://tools.kali.org/wireless-attacks/multimon-ng) to decode them.
+* Check the [**subscription plans**](https://github.com/sponsors/carlospolop)!
+* **Join the** 💬 [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** us on **Twitter** 🐦 [**@hacktricks\_live**](https://twitter.com/hacktricks\_live)**.**
+* **Share hacking tricks by submitting PRs to the** [**HackTricks**](https://github.com/carlospolop/hacktricks) and [**HackTricks Cloud**](https://github.com/carlospolop/hacktricks-cloud) github repos.
 
-Video file formats are really container formats, that contain separate streams of both audio and video that are multiplexed together for playback. For analyzing and manipulating video file formats, [ffmpeg](http://ffmpeg.org/) is recommended. `ffmpeg -i` gives initial analysis of the file content. It can also de-multiplex or playback the content streams. The power of ffmpeg is exposed to Python using [ffmpy](http://ffmpy.readthedocs.io/en/latest/examples.html).
+</details>
+{% endhint %}
+
+<figure><img src="/.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+
+Deepen your expertise in **Mobile Security** with 8kSec Academy. Master iOS and Android security through our self-paced courses and get certified:
+
+{% embed url="https://academy.8ksec.io/" %}
+
+**Audio and video file manipulation** is a staple in **CTF forensics challenges**, leveraging **steganography** and metadata analysis to hide or reveal secret messages. Tools such as **[mediainfo](https://mediaarea.net/en/MediaInfo)** and **`exiftool`** are essential for inspecting file metadata and identifying content types.
+
+For audio challenges, **[Audacity](http://www.audacityteam.org/)** stands out as a premier tool for viewing waveforms and analyzing spectrograms, essential for uncovering text encoded in audio. **[Sonic Visualiser](http://www.sonicvisualiser.org/)** is highly recommended for detailed spectrogram analysis. **Audacity** allows for audio manipulation like slowing down or reversing tracks to detect hidden messages. **[Sox](http://sox.sourceforge.net/)**, a command-line utility, excels in converting and editing audio files.
+
+**Least Significant Bits (LSB)** manipulation is a common technique in audio and video steganography, exploiting the fixed-size chunks of media files to embed data discreetly. **[Multimon-ng](http://tools.kali.org/wireless-attacks/multimon-ng)** is useful for decoding messages hidden as **DTMF tones** or **Morse code**.
+
+Video challenges often involve container formats that bundle audio and video streams. **[FFmpeg](http://ffmpeg.org/)** is the go-to for analyzing and manipulating these formats, capable of de-multiplexing and playing back content. For developers, **[ffmpy](http://ffmpy.readthedocs.io/en/latest/examples.html)** integrates FFmpeg's capabilities into Python for advanced scriptable interactions.
+
+This array of tools underscores the versatility required in CTF challenges, where participants must employ a broad spectrum of analysis and manipulation techniques to uncover hidden data within audio and video files.
+
+## References
+* [https://trailofbits.github.io/ctf/forensics/](https://trailofbits.github.io/ctf/forensics/)
+
+
+<figure><img src="/.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+
+Deepen your expertise in **Mobile Security** with 8kSec Academy. Master iOS and Android security through our self-paced courses and get certified:
+
+{% embed url="https://academy.8ksec.io/" %}
+
+{% hint style="success" %}
+Learn & practice AWS Hacking:<img src="/.gitbook/assets/arte.png" alt="" data-size="line">[**HackTricks Training AWS Red Team Expert (ARTE)**](https://training.hacktricks.xyz/courses/arte)<img src="/.gitbook/assets/arte.png" alt="" data-size="line">\
+Learn & practice GCP Hacking: <img src="/.gitbook/assets/grte.png" alt="" data-size="line">[**HackTricks Training GCP Red Team Expert (GRTE)**<img src="/.gitbook/assets/grte.png" alt="" data-size="line">](https://training.hacktricks.xyz/courses/grte)
+
+<details>
+
+<summary>Support HackTricks</summary>
+
+* Check the [**subscription plans**](https://github.com/sponsors/carlospolop)!
+* **Join the** 💬 [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** us on **Twitter** 🐦 [**@hacktricks\_live**](https://twitter.com/hacktricks\_live)**.**
+* **Share hacking tricks by submitting PRs to the** [**HackTricks**](https://github.com/carlospolop/hacktricks) and [**HackTricks Cloud**](https://github.com/carlospolop/hacktricks-cloud) github repos.
+
+</details>
+{% endhint %}
+
 

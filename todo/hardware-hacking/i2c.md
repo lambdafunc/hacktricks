@@ -1,8 +1,19 @@
 # I2C
 
+{% hint style="success" %}
+Learn & practice AWS Hacking:<img src="/.gitbook/assets/arte.png" alt="" data-size="line">[**HackTricks Training AWS Red Team Expert (ARTE)**](https://training.hacktricks.xyz/courses/arte)<img src="/.gitbook/assets/arte.png" alt="" data-size="line">\
+Learn & practice GCP Hacking: <img src="/.gitbook/assets/grte.png" alt="" data-size="line">[**HackTricks Training GCP Red Team Expert (GRTE)**<img src="/.gitbook/assets/grte.png" alt="" data-size="line">](https://training.hacktricks.xyz/courses/grte)
 
+<details>
 
+<summary>Support HackTricks</summary>
 
+* Check the [**subscription plans**](https://github.com/sponsors/carlospolop)!
+* **Join the** 💬 [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** us on **Twitter** 🐦 [**@hacktricks\_live**](https://twitter.com/hacktricks\_live)**.**
+* **Share hacking tricks by submitting PRs to the** [**HackTricks**](https://github.com/carlospolop/hacktricks) and [**HackTricks Cloud**](https://github.com/carlospolop/hacktricks-cloud) github repos.
+
+</details>
+{% endhint %}
 
 ## Bus Pirate
 
@@ -51,11 +62,11 @@ As you can see in the previous command line it said that it found 0 errors. This
 
 To connect with the bus pirate you can follow the docs:
 
-![](<../../.gitbook/assets/image (307) (2).png>)
+![](<../../.gitbook/assets/image (484).png>)
 
 In this case I'm going to connect to an EPROM: ATMEL901 24C256 PU27:
 
-![](<../../.gitbook/assets/image (465) (2) (1).png>)
+![](<../../.gitbook/assets/image (964).png>)
 
 To talk with bus pirate I used Tera Term connected to the pirate bus COM port with a Setup --> Serial Port --> Speed of 115200.\
 In the following communication you can find how to prepare the bus pirate to talk I2C and how to write and read from the memory (Comments appear using "#", don't expect that part in the communication):
@@ -130,7 +141,7 @@ Searching I2C address space. Found devices at:
 0xA0(0x50 W) 0xA1(0x50 R)
 
 # Note that each slave will have a write address and a read address
-## 0xA0 ad 0xA1 in the previous case
+# 0xA0 ad 0xA1 in the previous case
 
 # Write "BBB" in address 0x69
 I2C>[0xA0 0x00 0x69 0x42 0x42 0x42]
@@ -163,7 +174,7 @@ NACK
 
 In this scenario we are going to sniff the I2C communication between the arduino and the previous EPROM, you just need to communicate both devices and then connect the bus pirate to the SCL, SDA and GND pins:
 
-![](<../../.gitbook/assets/image (201) (2) (1).png>)
+![](<../../.gitbook/assets/image (166).png>)
 
 ```bash
 I2C>m
@@ -210,3 +221,18 @@ Sniffer
 Any key to exit
 [0xA0+0x00+0x69+0x41+0x41+0x41+0x20+0x48+0x69+0x20+0x44+0x72+0x65+0x67+0x21+0x20+0x41+0x41+0x41+0x00+]
 ```
+
+{% hint style="success" %}
+Learn & practice AWS Hacking:<img src="/.gitbook/assets/arte.png" alt="" data-size="line">[**HackTricks Training AWS Red Team Expert (ARTE)**](https://training.hacktricks.xyz/courses/arte)<img src="/.gitbook/assets/arte.png" alt="" data-size="line">\
+Learn & practice GCP Hacking: <img src="/.gitbook/assets/grte.png" alt="" data-size="line">[**HackTricks Training GCP Red Team Expert (GRTE)**<img src="/.gitbook/assets/grte.png" alt="" data-size="line">](https://training.hacktricks.xyz/courses/grte)
+
+<details>
+
+<summary>Support HackTricks</summary>
+
+* Check the [**subscription plans**](https://github.com/sponsors/carlospolop)!
+* **Join the** 💬 [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** us on **Twitter** 🐦 [**@hacktricks\_live**](https://twitter.com/hacktricks\_live)**.**
+* **Share hacking tricks by submitting PRs to the** [**HackTricks**](https://github.com/carlospolop/hacktricks) and [**HackTricks Cloud**](https://github.com/carlospolop/hacktricks-cloud) github repos.
+
+</details>
+{% endhint %}

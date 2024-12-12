@@ -1,6 +1,26 @@
-# More Tools
 
-## BlueTeam
+
+{% hint style="success" %}
+Learn & practice AWS Hacking:<img src="/.gitbook/assets/arte.png" alt="" data-size="line">[**HackTricks Training AWS Red Team Expert (ARTE)**](https://training.hacktricks.xyz/courses/arte)<img src="/.gitbook/assets/arte.png" alt="" data-size="line">\
+Learn & practice GCP Hacking: <img src="/.gitbook/assets/grte.png" alt="" data-size="line">[**HackTricks Training GCP Red Team Expert (GRTE)**<img src="/.gitbook/assets/grte.png" alt="" data-size="line">](https://training.hacktricks.xyz/courses/grte)
+
+<details>
+
+<summary>Support HackTricks</summary>
+
+* Check the [**subscription plans**](https://github.com/sponsors/carlospolop)!
+* **Join the** 💬 [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** us on **Twitter** 🐦 [**@hacktricks\_live**](https://twitter.com/hacktricks\_live)**.**
+* **Share hacking tricks by submitting PRs to the** [**HackTricks**](https://github.com/carlospolop/hacktricks) and [**HackTricks Cloud**](https://github.com/carlospolop/hacktricks-cloud) github repos.
+
+</details>
+{% endhint %}
+
+<figure><img src="https://pentest.eu/RENDER_WebSec_10fps_21sec_9MB_29042024.gif" alt=""><figcaption></figcaption></figure>
+
+{% embed url="https://websec.nl/" %}
+
+
+# BlueTeam
 
 * [https://github.com/yarox24/attack\_monitor](https://github.com/yarox24/attack\_monitor)
 * [https://capsule8.com/blog/dont-get-kicked-out-a-tale-of-rootkits-and-other-backdoors/](https://capsule8.com/blog/dont-get-kicked-out-a-tale-of-rootkits-and-other-backdoors/)
@@ -8,7 +28,7 @@
 * [https://github.com/PaperMtn/lil-pwny](https://github.com/PaperMtn/lil-pwny) : Check disclosed accounts
 * [https://github.com/rabobank-cdc/DeTTECT](https://github.com/rabobank-cdc/DeTTECT)
 
-## OSINT
+# OSINT
 
 * [https://github.com/3vangel1st/kamerka](https://github.com/3vangel1st/kamerka)
 * [https://github.com/BullsEye0/google\_dork\_list](https://github.com/BullsEye0/google\_dork\_list)
@@ -29,7 +49,7 @@
 * [https://github.com/zricethezav/gitleaks](https://github.com/zricethezav/gitleaks)
 * [https://www.nmmapper.com/sys/tools/subdomainfinder/](https://www.nmmapper.com/sys/tools/subdomainfinder/) : 8 Subdomain finder tools, sublist3r, amass and more
 
-## **WEB**
+# **WEB**
 
 * [https://github.com/AlisamTechnology/ATSCAN](https://github.com/AlisamTechnology/ATSCAN)
 * [https://github.com/momenbasel/KeyFinder](https://github.com/momenbasel/KeyFinder)
@@ -56,7 +76,7 @@
 * [https://github.com/Quitten/Autorize](https://github.com/Quitten/Autorize) : Automatic authentication tests (remove cookies and try to send the request)
 * [https://github.com/pikpikcu/xrcross](https://github.com/pikpikcu/xrcross): XRCross is a Reconstruction, Scanner, and a tool for penetration / BugBounty testing. This tool was built to test (XSS|SSRF|CORS|SSTI|IDOR|RCE|LFI|SQLI) vulnerabilities
 
-## Windows
+# Windows
 
 * [https://github.com/Mr-Un1k0d3r/PoisonHandler](https://github.com/Mr-Un1k0d3r/PoisonHandler) : Lateral movements
 * [https://freddiebarrsmith.com/trix/trix.html](https://freddiebarrsmith.com/trix/trix.html) : LOL bins
@@ -72,7 +92,7 @@
 * [https://bestestredteam.com/2018/10/02/tracking-pixel-in-microsoft-office-document/](https://bestestredteam.com/2018/10/02/tracking-pixel-in-microsoft-office-document/) : Track who open a document
 * [https://github.com/Integration-IT/Active-Directory-Exploitation-Cheat-Sheet](https://github.com/Integration-IT/Active-Directory-Exploitation-Cheat-Sheet) : Active Directory Cheat Sheet
 
-## Firmware
+# Firmware
 
 Tools q veo q pueden molar para analizar firmares (automaticas):
 
@@ -93,7 +113,7 @@ y por aqui la metodologia owasp para analizar firmware: [https://github.com/scri
 
 Firmware emulation: FIRMADYNE (https://github.com/firmadyne/firmadyne/) is a platform for automating the emulation and dynamic analysis of Linux-based firmware.
 
-## OTHER
+# OTHER
 
 * [https://twitter.com/HackAndDo/status/1202695084543791117](https://twitter.com/HackAndDo/status/1202695084543791117)
 * [https://github.com/weev3/LKWA](https://github.com/weev3/LKWA)
@@ -114,3 +134,26 @@ Firmware emulation: FIRMADYNE (https://github.com/firmadyne/firmadyne/) is a pla
 * [https://github.com/rackerlabs/scantron](https://github.com/rackerlabs/scantron) : automating scanning
 * [https://github.com/doyensec/awesome-electronjs-hacking](https://github.com/doyensec/awesome-electronjs-hacking) : This list aims to cover Electron.js security related topics.
 * [https://github.com/serain/bbrecon](https://github.com/serain/bbrecon) : Info about BB programs
+
+
+<figure><img src="https://pentest.eu/RENDER_WebSec_10fps_21sec_9MB_29042024.gif" alt=""><figcaption></figcaption></figure>
+
+{% embed url="https://websec.nl/" %}
+
+
+{% hint style="success" %}
+Learn & practice AWS Hacking:<img src="/.gitbook/assets/arte.png" alt="" data-size="line">[**HackTricks Training AWS Red Team Expert (ARTE)**](https://training.hacktricks.xyz/courses/arte)<img src="/.gitbook/assets/arte.png" alt="" data-size="line">\
+Learn & practice GCP Hacking: <img src="/.gitbook/assets/grte.png" alt="" data-size="line">[**HackTricks Training GCP Red Team Expert (GRTE)**<img src="/.gitbook/assets/grte.png" alt="" data-size="line">](https://training.hacktricks.xyz/courses/grte)
+
+<details>
+
+<summary>Support HackTricks</summary>
+
+* Check the [**subscription plans**](https://github.com/sponsors/carlospolop)!
+* **Join the** 💬 [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** us on **Twitter** 🐦 [**@hacktricks\_live**](https://twitter.com/hacktricks\_live)**.**
+* **Share hacking tricks by submitting PRs to the** [**HackTricks**](https://github.com/carlospolop/hacktricks) and [**HackTricks Cloud**](https://github.com/carlospolop/hacktricks-cloud) github repos.
+
+</details>
+{% endhint %}
+
+

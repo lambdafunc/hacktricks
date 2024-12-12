@@ -1,8 +1,30 @@
-# Interesting Groups - Linux PE
 
-## Sudo/Admin Groups
 
-### **PE - Method 1**
+{% hint style="success" %}
+Learn & practice AWS Hacking:<img src="/.gitbook/assets/arte.png" alt="" data-size="line">[**HackTricks Training AWS Red Team Expert (ARTE)**](https://training.hacktricks.xyz/courses/arte)<img src="/.gitbook/assets/arte.png" alt="" data-size="line">\
+Learn & practice GCP Hacking: <img src="/.gitbook/assets/grte.png" alt="" data-size="line">[**HackTricks Training GCP Red Team Expert (GRTE)**<img src="/.gitbook/assets/grte.png" alt="" data-size="line">](https://training.hacktricks.xyz/courses/grte)
+
+<details>
+
+<summary>Support HackTricks</summary>
+
+* Check the [**subscription plans**](https://github.com/sponsors/carlospolop)!
+* **Join the** 💬 [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** us on **Twitter** 🐦 [**@hacktricks\_live**](https://twitter.com/hacktricks\_live)**.**
+* **Share hacking tricks by submitting PRs to the** [**HackTricks**](https://github.com/carlospolop/hacktricks) and [**HackTricks Cloud**](https://github.com/carlospolop/hacktricks-cloud) github repos.
+
+</details>
+{% endhint %}
+
+<figure><img src="/.gitbook/assets/image (48).png" alt=""><figcaption></figcaption></figure>
+
+Use [**Trickest**](https://trickest.com/?utm_source=hacktricks&utm_medium=text&utm_campaign=ppc&utm_term=trickest&utm_content=command-injection) to easily build and **automate workflows** powered by the world's **most advanced** community tools.\
+Get Access Today:
+
+{% embed url="https://trickest.com/?utm_source=hacktricks&utm_medium=banner&utm_campaign=ppc&utm_content=command-injection" %}
+
+# Sudo/Admin Groups
+
+## **PE - Method 1**
 
 **Sometimes**, **by default \(or because some software needs it\)** inside the **/etc/sudoers** file you can find some of these lines:
 
@@ -22,7 +44,7 @@ If this is the case, to **become root you can just execute**:
 sudo su
 ```
 
-### PE - Method 2
+## PE - Method 2
 
 Find all suid binaries and check if there is the binary **Pkexec**:
 
@@ -70,7 +92,7 @@ pkttyagent --process <PID of session1> #Step 2, attach pkttyagent to session1
 ```
 {% endcode %}
 
-## Wheel Group
+# Wheel Group
 
 **Sometimes**, **by default** inside the **/etc/sudoers** file you can find this line:
 
@@ -86,7 +108,7 @@ If this is the case, to **become root you can just execute**:
 sudo su
 ```
 
-## Shadow Group
+# Shadow Group
 
 Users from the **group shadow** can **read** the **/etc/shadow** file:
 
@@ -96,7 +118,7 @@ Users from the **group shadow** can **read** the **/etc/shadow** file:
 
 So, read the file and try to **crack some hashes**.
 
-## Disk Group
+# Disk Group
 
  This privilege is almost **equivalent to root access** as you can access all the data inside of the machine.
 
@@ -119,7 +141,7 @@ debugfs:  dump /tmp/asd1.txt /tmp/asd2.txt
 
 However, if you try to **write files owned by root** \(like `/etc/shadow` or `/etc/passwd`\) you will have a "**Permission denied**" error.
 
-## Video Group
+# Video Group
 
 Using the command `w` you can find **who is logged on the system** and it will show an output like the following one:
 
@@ -146,7 +168,7 @@ Then modify the Width and Height to the ones used on the screen and check differ
 
 ![](../../.gitbook/assets/image%20%28295%29.png)
 
-## Root Group
+# Root Group
 
 It looks like by default **members of root group** could have access to **modify** some **service** configuration files or some **libraries** files or **other interesting things** that could be used to escalate privileges...
 
@@ -156,7 +178,7 @@ It looks like by default **members of root group** could have access to **modify
 find / -group root -perm -g=w 2>/dev/null
 ```
 
-## Docker Group
+# Docker Group
 
 You can mount the root filesystem of the host machine to an instance’s volume, so when the instance starts it immediately loads a `chroot` into that volume. This effectively gives you root on the machine.
 
@@ -164,7 +186,31 @@ You can mount the root filesystem of the host machine to an instance’s volume,
 
 {% embed url="https://fosterelli.co/privilege-escalation-via-docker.html" %}
 
-## lxc/lxd Group
+# lxc/lxd Group
 
 [lxc - Privilege Escalation](lxd-privilege-escalation.md)
+
+
+<figure><img src="/.gitbook/assets/image (48).png" alt=""><figcaption></figcaption></figure>
+
+Use [**Trickest**](https://trickest.com/?utm_source=hacktricks&utm_medium=text&utm_campaign=ppc&utm_term=trickest&utm_content=command-injection) to easily build and **automate workflows** powered by the world's **most advanced** community tools.\
+Get Access Today:
+
+{% embed url="https://trickest.com/?utm_source=hacktricks&utm_medium=banner&utm_campaign=ppc&utm_content=command-injection" %}
+
+{% hint style="success" %}
+Learn & practice AWS Hacking:<img src="/.gitbook/assets/arte.png" alt="" data-size="line">[**HackTricks Training AWS Red Team Expert (ARTE)**](https://training.hacktricks.xyz/courses/arte)<img src="/.gitbook/assets/arte.png" alt="" data-size="line">\
+Learn & practice GCP Hacking: <img src="/.gitbook/assets/grte.png" alt="" data-size="line">[**HackTricks Training GCP Red Team Expert (GRTE)**<img src="/.gitbook/assets/grte.png" alt="" data-size="line">](https://training.hacktricks.xyz/courses/grte)
+
+<details>
+
+<summary>Support HackTricks</summary>
+
+* Check the [**subscription plans**](https://github.com/sponsors/carlospolop)!
+* **Join the** 💬 [**Discord group**](https://discord.gg/hRep4RUj7f) or the [**telegram group**](https://t.me/peass) or **follow** us on **Twitter** 🐦 [**@hacktricks\_live**](https://twitter.com/hacktricks\_live)**.**
+* **Share hacking tricks by submitting PRs to the** [**HackTricks**](https://github.com/carlospolop/hacktricks) and [**HackTricks Cloud**](https://github.com/carlospolop/hacktricks-cloud) github repos.
+
+</details>
+{% endhint %}
+
 
